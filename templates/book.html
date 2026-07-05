@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}{{ book.title }} — My Library{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{{ asset_base }}/index.html">&larr; Back to Catalogue</a>
+
+<article class="book-detail">
+  <img class="book-detail-cover" src="{{ asset_base }}/{{ book.cover_url }}" alt="Cover of {{ book.title }}">
+
+  <div class="book-detail-body">
+    <h1>{{ book.title }}</h1>
+    <p class="book-author">{{ book.author }}</p>
+    <span class="status-badge status-{{ book.status_slug }}">{{ book.status }}</span>
+
+    <dl class="book-meta">
+      {% if book.isbn %}
+      <dt>ISBN</dt><dd>{{ book.isbn }}</dd>
+      {% endif %}
+      <dt>Genre</dt><dd>{{ book.genre }}</dd>
+      {% if book.series %}
+      <dt>Series</dt><dd>{{ book.series }}{% if book.series_number %} (#{{ book.series_number }}){% endif %}</dd>
+      {% endif %}
+      {% if book.publisher %}
+      <dt>Publisher</dt><dd>{{ book.publisher }}</dd>
+      {% endif %}
+      {% if book.publication_year %}
+      <dt>Publication Year</dt><dd>{{ book.publication_year }}</dd>
+      {% endif %}
+      {% if book.shelf %}
+      <dt>Shelf</dt><dd>{{ book.shelf }}</dd>
+      {% endif %}
+      {% if book.rating %}
+      <dt>Rating</dt><dd>{{ book.rating }}</dd>
+      {% endif %}
+    </dl>
+
+    {% if book.tags %}
+    <ul class="tag-list">
+      {% for tag in book.tags %}
+      <li class="tag-pill">{{ tag }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if book.notes %}
+    <p class="book-notes">{{ book.notes }}</p>
+    {% endif %}
+  </div>
+</article>
+{% endblock %}

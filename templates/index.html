@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}My Library — Catalogue{% endblock %}
+
+{% block content %}
+<section class="catalogue-header">
+  <h1>My Library</h1>
+  <p class="catalogue-counts">
+    <span id="total-count">{{ stats.total_books }}</span> books total &middot;
+    <span id="available-count">{{ stats.available_count }}</span> available now
+  </p>
+</section>
+
+<section class="controls" aria-label="Search, sort and filter">
+  <input
+    id="search-input"
+    type="search"
+    placeholder="Search by title, author, ISBN, genre, publisher or tag..."
+    aria-label="Search catalogue"
+  >
+
+  <label>
+    Genre
+    <select id="genre-filter">
+      <option value="all">All genres</option>
+      {% for genre in stats.genres %}
+      <option value="{{ genre }}">{{ genre }}</option>
+      {% endfor %}
+    </select>
+  </label>
+
+  <label>
+    Status
+    <select id="status-filter">
+      <option value="all">All statuses</option>
+      <option value="Available">Available</option>
+      <option value="On Loan">On Loan</option>
+      <option value="Reserved">Reserved</option>
+    </select>
+  </label>
+
+  <label>
+    Sort by
+    <select id="sort-select">
+      <option value="recent">Recently added</option>
+      <option value="title">Title</option>
+      <option value="author">Author</option>
+      <option value="year">Publication year</option>
+    </select>
+  </label>
+</section>
+
+<p id="results-count" class="results-count" aria-live="polite">
+  Showing {{ books|length }} of {{ stats.total_books }} books
+</p>
+
+<div id="book-grid" class="book-grid">
+  {% for book in books %}
+  <a
+    class="book-card"
+    href="{{ book.page_url }}"
+    data-id="{{ book.id }}"
+    data-title="{{ book.title }}"
+    data-author="{{ book.author }}"
+    data-genre="{{ book.genre }}"
+    data-status="{{ book.status }}"
+    data-isbn="{{ book.isbn or '' }}"
+    data-publisher="{{ book.publisher or '' }}"
+    data-tags="{{ book.tags|join(', ') }}"
+    data-year="{{ book.publication_year or '' }}"
+    data-order="{{ book.order }}"
+  >
+    <img class="book-cover" src="{{ book.cover_url }}" alt="Cover of {{ book.title }}" loading="lazy">
+    <div class="book-card-body">
+      <h2 class="book-title">{{ book.title }}</h2>
+      <p class="book-author">{{ book.author }}</p>
+      <p class="book-genre">{{ book.genre }}</p>
+      {% if book.shelf %}
+      <p class="book-shelf">Shelf: {{ book.shelf }}</p>
+      {% endif %}
+      <span class="status-badge status-{{ book.status_slug }}">{{ book.status }}</span>
+    </div>
+  </a>
+  {% endfor %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script type="module" src="{{ asset_base }}/static/js/app.js"></script>
+{% endblock %}

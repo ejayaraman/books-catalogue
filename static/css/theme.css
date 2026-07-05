@@ -1,0 +1,36 @@
+/* Light/dark theme variables. theme.js toggles data-theme on <html>. */
+
+:root,
+:root[data-theme="light"] {
+  --color-bg: #f7f7f9;
+  --color-surface: #ffffff;
+  --color-text: #1a1a1e;
+  --color-text-muted: #5b5b66;
+  --color-border: #e2e2e8;
+  --color-accent: #4f46e5;
+  --color-accent-contrast: #ffffff;
+
+  --status-available-bg: #e3f8e9;
+  --status-available-text: #157347;
+  --status-on-loan-bg: #fff4e0;
+  --status-on-loan-text: #9a5b00;
+  --status-reserved-bg: #eae6ff;
+  --status-reserved-text: #4b3aad;
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #14141a;
+  --color-surface: #1e1e26;
+  --color-text: #f0f0f5;
+  --color-text-muted: #a8a8b8;
+  --color-border: #333340;
+  --color-accent: #8b7fff;
+  --color-accent-contrast: #14141a;
+
+  --status-available-bg: #103820;
+  --status-available-text: #7be2a0;
+  --status-on-loan-bg: #3a2a06;
+  --status-on-loan-text: #ffcb73;
+  --status-reserved-bg: #251f47;
+  --status-reserved-text: #c2b6ff;
+}
