@@ -11,8 +11,7 @@ REQUIRED_COLUMNS = ("ID", "Title", "Author", "Genre", "Status")
 
 OPTIONAL_COLUMNS = (
     "ISBN",
-    "Series",
-    "Series Number",
+    "Language",
     "Publisher",
     "Publication Year",
     "Shelf",
@@ -75,10 +74,7 @@ def parse_row(row: dict[str, Any], row_number: int) -> Book:
         status=_clean_str(row.get("Status")),
         row_number=row_number,
         isbn=_clean_optional_str(row.get("ISBN")),
-        series=_clean_optional_str(row.get("Series")),
-        series_number=_clean_optional_int(
-            row.get("Series Number"), row_number=row_number, field_name="Series Number"
-        ),
+        language=_clean_optional_str(row.get("Language")),
         publisher=_clean_optional_str(row.get("Publisher")),
         publication_year=_clean_optional_int(
             row.get("Publication Year"), row_number=row_number, field_name="Publication Year"

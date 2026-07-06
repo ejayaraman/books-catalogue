@@ -4,10 +4,10 @@ import { matches } from "./search.js";
 import { apply as applyFilters } from "./filters.js";
 import { sort as sortBooks } from "./sorting.js";
 
-const state = { query: "", genre: "all", status: "all", sort: "recent" };
+const state = { query: "", genre: "all", language: "all", sort: "recent" };
 
 function recompute(books, cardsById, resultsCountEl, grid) {
-  const filtered = applyFilters(books, { genre: state.genre, status: state.status });
+  const filtered = applyFilters(books, { genre: state.genre, language: state.language });
   const searched = filtered.filter((book) => matches(book, state.query));
   const sorted = sortBooks(searched, state.sort);
   const visibleIds = new Set(sorted.map((book) => book.id));
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const searchInput = document.getElementById("search-input");
   const genreFilter = document.getElementById("genre-filter");
-  const statusFilter = document.getElementById("status-filter");
+  const languageFilter = document.getElementById("language-filter");
   const sortSelect = document.getElementById("sort-select");
   const resultsCountEl = document.getElementById("results-count");
 
@@ -56,8 +56,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     state.genre = genreFilter.value;
     update();
   });
-  statusFilter.addEventListener("change", () => {
-    state.status = statusFilter.value;
+  languageFilter.addEventListener("change", () => {
+    state.language = languageFilter.value;
     update();
   });
   sortSelect.addEventListener("change", () => {

@@ -30,12 +30,12 @@
   </label>
 
   <label>
-    Status
-    <select id="status-filter">
-      <option value="all">All statuses</option>
-      <option value="Available">Available</option>
-      <option value="On Loan">On Loan</option>
-      <option value="Reserved">Reserved</option>
+    Language
+    <select id="language-filter">
+      <option value="all">All languages</option>
+      {% for language in stats.languages %}
+      <option value="{{ language }}">{{ language }}</option>
+      {% endfor %}
     </select>
   </label>
 
@@ -45,7 +45,6 @@
       <option value="recent">Recently added</option>
       <option value="title">Title</option>
       <option value="author">Author</option>
-      <option value="year">Publication year</option>
     </select>
   </label>
 </section>

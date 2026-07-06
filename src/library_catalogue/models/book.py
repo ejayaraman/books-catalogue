@@ -22,8 +22,7 @@ class Book:
     status: str
     row_number: int
     isbn: str | None = None
-    series: str | None = None
-    series_number: int | None = None
+    language: str | None = None
     publisher: str | None = None
     publication_year: int | None = None
     shelf: str | None = None

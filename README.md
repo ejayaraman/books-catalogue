@@ -59,8 +59,7 @@ One row per physical copy. Columns:
 | Author           | Yes      |                                              |
 | ISBN             | No       |                                              |
 | Genre            | Yes      |                                              |
-| Series           | No       |                                              |
-| Series Number    | No       |                                              |
+| Language         | No       |                                              |
 | Publisher        | No       |                                              |
 | Publication Year | No       |                                              |
 | Shelf            | No       | Omitted from the book page if blank        |
@@ -101,6 +100,5 @@ mypy src              # type-check
 
 ## Future enhancements (not in this version)
 
-GitHub Pages deployment workflow, borrow-request workflow, QR codes, author/series
-pages, reading statistics, multiple collections, ISBN metadata lookup, import/export
-tools.
+GitHub Pages deployment workflow, borrow-request workflow, QR codes, author pages,
+reading statistics, multiple collections, ISBN metadata lookup, import/export tools.

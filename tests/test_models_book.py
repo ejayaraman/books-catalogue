@@ -14,8 +14,7 @@ def test_book_required_fields_and_defaults() -> None:
     )
     assert book.id == "BK000001"
     assert book.isbn is None
-    assert book.series is None
-    assert book.series_number is None
+    assert book.language is None
     assert book.publisher is None
     assert book.publication_year is None
     assert book.shelf is None
@@ -34,8 +33,7 @@ def test_book_optional_fields_populated() -> None:
         status="On Loan",
         row_number=2,
         isbn="9780441478125",
-        series="Hainish Cycle",
-        series_number=4,
+        language="English",
         publisher="Ace Books",
         publication_year=1969,
         shelf="A3",

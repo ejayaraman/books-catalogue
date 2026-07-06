@@ -34,8 +34,7 @@ def test_handles_blank_optional_fields(valid_spreadsheet: Path) -> None:
     assert foundation.rating is None
 
     neuromancer = next(book for book in books if book.id == "BK000006")
-    assert neuromancer.series is None
-    assert neuromancer.series_number is None
+    assert neuromancer.language is None
 
 
 def test_missing_required_column_raises(tmp_path: Path) -> None:
