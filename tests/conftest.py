@@ -12,12 +12,12 @@ PROJECT_ROOT = Path(__file__).parent.parent
 
 @pytest.fixture
 def valid_spreadsheet() -> Path:
-    return FIXTURES_DIR / "valid_books.xlsx"
+    return FIXTURES_DIR / "valid_books.csv"
 
 
 @pytest.fixture
 def invalid_spreadsheet() -> Path:
-    return FIXTURES_DIR / "invalid_books.xlsx"
+    return FIXTURES_DIR / "invalid_books.csv"
 
 
 @pytest.fixture

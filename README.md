@@ -1,7 +1,7 @@
 # Personal Library Catalogue Generator
 
 Generates a fully static website for a personal collection of physical books from
-an Excel spreadsheet. No database, no backend, no web server required to view it —
+a CSV file. No database, no backend, no web server required to view it —
 just open `output/index.html`, or serve the `output/` folder however you like
 (including GitHub Pages, unmodified).
 
@@ -22,7 +22,7 @@ the full-size cover image.
 
 ## Usage
 
-1. Fill in `data/books.xlsx` with your collection (see **Spreadsheet format** below).
+1. Fill in `data/books.csv` with your collection (see **CSV format** below).
 2. Put cover images in `covers/`, named `<ID>.jpg` (or `.jpeg`/`.png`/`.webp`), e.g.
    `covers/BK000001.jpg`. Books without a cover automatically get a placeholder.
 3. Run the generator:
@@ -45,10 +45,10 @@ safe to re-run at any time and produces deterministic output for the same input.
 ### CLI options
 
 ```bash
-python generate.py --data path/to/books.xlsx --output path/to/output --verbose
+python generate.py --data path/to/books.csv --output path/to/output --verbose
 ```
 
-## Spreadsheet format
+## CSV format
 
 One row per physical copy. Columns:
 
@@ -71,7 +71,7 @@ One row per physical copy. Columns:
 
 ## Validation
 
-Before generating anything, the spreadsheet is validated. Generation **stops**
+Before generating anything, the CSV file is validated. Generation **stops**
 if there are duplicate IDs, missing required fields, or invalid status values.
 Duplicate ISBNs and missing cover images are reported as warnings only and do
 not block the build. A validation summary is always printed first.
@@ -83,7 +83,7 @@ generate.py             Thin CLI entry point
 src/library_catalogue/  Python package (reader, validators, asset manager, site generator)
 templates/               Jinja2 templates (base.html, index.html, book.html)
 static/                  CSS, JS, images, icons — copied into output/ as-is
-data/books.xlsx          Your spreadsheet
+data/books.csv           Your CSV file
 covers/                  Your cover images
 tests/                   pytest suite
 output/                  Generated site (safe to delete; regenerated every run)

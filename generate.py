@@ -2,7 +2,7 @@
 
 Usage:
     python generate.py
-    python generate.py --data data/books.xlsx --output output --verbose
+    python generate.py --data data/books.csv --output output --verbose
 """
 
 import argparse
@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--data", type=Path, default=None, help="Path to the books spreadsheet")
+    parser.add_argument("--data", type=Path, default=None, help="Path to the books CSV file")
     parser.add_argument("--output", type=Path, default=None, help="Output directory")
     parser.add_argument("--verbose", action="store_true", help="Enable debug logging")
     return parser.parse_args(argv)

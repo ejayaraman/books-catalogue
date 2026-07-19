@@ -1,8 +1,7 @@
-"""Tests for the spreadsheet reader."""
+"""Tests for the CSV reader."""
 
 from pathlib import Path
 
-import pandas as pd
 import pytest
 
 from library_catalogue.library_reader import SpreadsheetError, read_spreadsheet
@@ -38,9 +37,8 @@ def test_handles_blank_optional_fields(valid_spreadsheet: Path) -> None:
 
 
 def test_missing_required_column_raises(tmp_path: Path) -> None:
-    frame = pd.DataFrame({"Title": ["Dune"], "Author": ["Frank Herbert"]})
-    path = tmp_path / "missing_columns.xlsx"
-    frame.to_excel(path, index=False)
+    path = tmp_path / "missing_columns.csv"
+    path.write_text("Title,Author\nDune,Frank Herbert\n", encoding="utf-8")
 
     with pytest.raises(SpreadsheetError, match="missing required column"):
         read_spreadsheet(path)
@@ -48,7 +46,7 @@ def test_missing_required_column_raises(tmp_path: Path) -> None:
 
 def test_missing_file_raises(tmp_path: Path) -> None:
     with pytest.raises(SpreadsheetError, match="not found"):
-        read_spreadsheet(tmp_path / "does_not_exist.xlsx")
+        read_spreadsheet(tmp_path / "does_not_exist.csv")
 
 
 def test_blank_required_field_becomes_empty_string(invalid_spreadsheet: Path) -> None:

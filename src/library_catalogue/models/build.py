@@ -26,7 +26,7 @@ class BuildConfig:
     def default(cls, project_root: Path | None = None) -> "BuildConfig":
         root = project_root or PROJECT_ROOT
         return cls(
-            spreadsheet_path=root / "data" / "books.xlsx",
+            spreadsheet_path=root / "data" / "books.csv",
             templates_dir=root / "templates",
             static_dir=root / "static",
             covers_dir=root / "covers",

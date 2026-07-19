@@ -5,11 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "library-catalogue-generator"
 version = "1.0.0"
-description = "Generates a static website catalogue for a personal book collection from an Excel spreadsheet."
+description = "Generates a static website catalogue for a personal book collection from a CSV file."
 requires-python = ">=3.12"
 dependencies = [
-    "pandas>=2.2",
-    "openpyxl>=3.1",
     "Jinja2>=3.1",
 ]
 
@@ -49,7 +47,3 @@ python_version = "3.12"
 disallow_untyped_defs = true
 warn_unused_ignores = true
 warn_redundant_casts = true
-
-[[tool.mypy.overrides]]
-module = ["pandas.*", "openpyxl.*"]
-ignore_missing_imports = true

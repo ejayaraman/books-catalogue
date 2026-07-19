@@ -29,6 +29,6 @@ def test_main_exits_one_and_writes_nothing_on_invalid_spreadsheet(
 
 def test_main_exits_one_on_missing_spreadsheet(tmp_path: Path) -> None:
     exit_code = generate.main(
-        ["--data", str(tmp_path / "does_not_exist.xlsx"), "--output", str(tmp_path / "output")]
+        ["--data", str(tmp_path / "does_not_exist.csv"), "--output", str(tmp_path / "output")]
     )
     assert exit_code == 1

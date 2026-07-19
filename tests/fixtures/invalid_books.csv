@@ -1,0 +1,7 @@
+ID,Title,Author,ISBN,Genre,Language,Publisher,Publication Year,Shelf,Status,Tags,Notes,Rating,Cover Image
+BK000001,Dune,Frank Herbert,9780441013593,Science Fiction,,Ace Books,1965,A1,Available,favorites,,,
+BK000001,Dune (duplicate copy),Frank Herbert,9780441013593,Science Fiction,,Ace Books,1965,A2,Available,,,,
+BK000003,,Isaac Asimov,,Science Fiction,,,1951,,Available,,,,
+BK000004,The Hobbit,J.R.R. Tolkien,,Fantasy,,,1937,,Checked Out,,,,
+BK000005,Foundation,Isaac Asimov,9780553293357,Science Fiction,,,1951,,Available,,,,
+BK000006,Neuromancer,William Gibson,9780553293357,Cyberpunk,,,1984,,Available,,,,
