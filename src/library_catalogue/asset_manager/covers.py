@@ -12,11 +12,21 @@ from pathlib import Path
 
 from library_catalogue.models import Book
 
+try:
+    from PIL import Image
+
+    _PILLOW_AVAILABLE = True
+except ImportError:
+    _PILLOW_AVAILABLE = False
+
 logger = logging.getLogger(__name__)
 
 COVER_EXTENSIONS = (".jpg", ".jpeg", ".png", ".webp")
 
 PLACEHOLDER_NAME = "placeholder.jpg"
+
+MAX_COVER_HEIGHT = 1000
+JPEG_QUALITY = 80
 
 
 def resolve_cover_path(book: Book, covers_dir: Path) -> Path | None:
@@ -34,6 +44,43 @@ def resolve_cover_path(book: Book, covers_dir: Path) -> Path | None:
         if candidate.is_file():
             return candidate
     return None
+
+
+def _copy_cover(source: Path, dest: Path) -> None:
+    """Copy a cover image, downscaling it if Pillow is available.
+
+    Falls back to a plain byte copy when Pillow isn't installed, or when the
+    source can't be decoded as an image (e.g. an unsupported format).
+    """
+    if not _PILLOW_AVAILABLE:
+        shutil.copy2(source, dest)
+        return
+
+    try:
+        with Image.open(source) as image:
+            if image.height > MAX_COVER_HEIGHT:
+                ratio = MAX_COVER_HEIGHT / image.height
+                new_size = (round(image.width * ratio), MAX_COVER_HEIGHT)
+                image = image.resize(new_size, Image.LANCZOS)
+
+            suffix = dest.suffix.lower()
+            if suffix in (".jpg", ".jpeg"):
+                if image.mode != "RGB":
+                    image = image.convert("RGB")
+                image.save(dest, quality=JPEG_QUALITY, optimize=True)
+            elif suffix == ".webp":
+                image.save(dest, quality=JPEG_QUALITY)
+            else:
+                image.save(dest, optimize=True)
+
+        # Resampling can occasionally bloat file size (e.g. a flat-color PNG
+        # with transparency) even though the pixel dimensions shrank. Never
+        # ship a "resized" cover that's bigger than the original.
+        if dest.stat().st_size > source.stat().st_size:
+            shutil.copy2(source, dest)
+    except Exception:
+        logger.warning("Could not resize cover %s, copying as-is", source, exc_info=True)
+        shutil.copy2(source, dest)
 
 
 @dataclass
@@ -71,7 +118,7 @@ def copy_covers(
             result.cover_url_by_book_id[book.id] = f"covers/{PLACEHOLDER_NAME}"
             continue
         dest = output_covers_dir / f"{book.id}{source.suffix.lower()}"
-        shutil.copy2(source, dest)
+        _copy_cover(source, dest)
         result.copied_paths.append(dest)
         result.cover_url_by_book_id[book.id] = f"covers/{dest.name}"
 
