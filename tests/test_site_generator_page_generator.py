@@ -25,7 +25,9 @@ def make_book(**overrides: object) -> Book:
 
 def test_render_book_page_contains_expected_fields() -> None:
     generator = PageGenerator(TEMPLATES_DIR)
-    book = make_book(isbn="9780441013593", shelf="A1")
+    book = make_book(
+        isbn="9780441013593", shelf="A1", description="A young duke leads a desert revolt."
+    )
     book_dict = book_to_dict(book, cover_url="covers/BK000001.jpg", page_url="books/BK000001.html")
 
     html = generator.render_book_page(book_dict)
@@ -36,6 +38,19 @@ def test_render_book_page_contains_expected_fields() -> None:
     assert "status-available" in html
     assert 'href="../index.html"' in html
     assert "Shelf" in html and "A1" in html
+    assert "A young duke leads a desert revolt." in html
+
+
+def test_render_book_page_omits_blank_description() -> None:
+    generator = PageGenerator(TEMPLATES_DIR)
+    book = make_book(description=None)
+    book_dict = book_to_dict(
+        book, cover_url="covers/placeholder.jpg", page_url="books/BK000001.html"
+    )
+
+    html = generator.render_book_page(book_dict)
+
+    assert "book-description" not in html
 
 
 def test_render_book_page_omits_blank_shelf() -> None:

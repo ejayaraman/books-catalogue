@@ -19,6 +19,7 @@ OPTIONAL_COLUMNS = (
     "Notes",
     "Rating",
     "Cover Image",
+    "Description",
 )
 
 ALL_COLUMNS = REQUIRED_COLUMNS + OPTIONAL_COLUMNS
@@ -37,6 +38,18 @@ def _clean_str(value: Any) -> str:
 def _clean_optional_str(value: Any) -> str | None:
     text = _clean_str(value)
     return text or None
+
+
+def _clean_multiline_str(value: Any) -> str | None:
+    """Like ``_clean_optional_str``, but treats a literal ``\\n`` as a line break.
+
+    Lets a description span multiple lines by typing ``\\n`` in a plain cell,
+    without needing an actual embedded newline inside a quoted CSV field.
+    """
+    text = _clean_str(value)
+    if not text:
+        return None
+    return text.replace("\\n", "\n")
 
 
 def _clean_optional_int(value: Any, *, row_number: int, field_name: str) -> int | None:
@@ -84,4 +97,5 @@ def parse_row(row: dict[str, Any], row_number: int) -> Book:
         notes=_clean_optional_str(row.get("Notes")),
         rating=_clean_optional_str(row.get("Rating")),
         cover_image=_clean_optional_str(row.get("Cover Image")),
+        description=_clean_multiline_str(row.get("Description")),
     )

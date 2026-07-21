@@ -19,6 +19,7 @@ def test_book_required_fields_and_defaults() -> None:
     assert book.publication_year is None
     assert book.shelf is None
     assert book.tags == ()
+    assert book.description is None
     assert book.notes is None
     assert book.rating is None
     assert book.cover_image is None
@@ -38,11 +39,13 @@ def test_book_optional_fields_populated() -> None:
         publication_year=1969,
         shelf="A3",
         tags=("favorites", "award-winner"),
+        description="A young diplomat is sent to a wintry planet.",
         notes="Signed first edition.",
         rating="4/5",
         cover_image="custom-cover.jpg",
     )
     assert book.tags == ("favorites", "award-winner")
+    assert book.description == "A young diplomat is sent to a wintry planet."
     assert book.rating == "4/5"
 
 

@@ -13,6 +13,10 @@
     <p class="book-author">{{ book.author }}</p>
     <span class="status-badge status-{{ book.status_slug }}">{{ book.status }}</span>
 
+    {% if book.description %}
+    <p class="book-description">{{ book.description }}</p>
+    {% endif %}
+
     <dl class="book-meta">
       {% if book.isbn %}
       <dt>ISBN</dt><dd>{{ book.isbn }}</dd>

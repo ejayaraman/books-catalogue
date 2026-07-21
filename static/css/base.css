@@ -249,6 +249,12 @@ main {
   color: var(--color-text-muted);
 }
 
+.book-description {
+  line-height: 1.5;
+  margin: 1rem 0;
+  white-space: pre-line;
+}
+
 .book-notes {
   line-height: 1.5;
 }

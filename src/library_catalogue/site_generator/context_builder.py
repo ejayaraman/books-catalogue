@@ -27,6 +27,7 @@ def book_to_dict(book: Book, cover_url: str, page_url: str) -> dict[str, Any]:
         "tags": list(book.tags),
         "notes": book.notes,
         "rating": book.rating,
+        "description": book.description,
         "cover_url": cover_url,
         "page_url": page_url,
         "order": book.row_number - 1,

@@ -30,3 +30,4 @@ class Book:
     notes: str | None = None
     rating: str | None = None
     cover_image: str | None = None
+    description: str | None = None
