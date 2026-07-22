@@ -83,3 +83,15 @@ def test_render_index_page_contains_counts_and_titles() -> None:
     assert "Foundation" in html
     assert 'id="total-count">2' in html
     assert 'href="books/BK000001.html"' in html
+
+
+def test_render_credits_page_lists_sources() -> None:
+    generator = PageGenerator(TEMPLATES_DIR)
+
+    html = generator.render_credits_page()
+
+    assert "Claude Code" in html
+    assert "Google Books" in html
+    assert "Open Library" in html
+    assert "Goodreads" in html
+    assert "Panuval.com" in html

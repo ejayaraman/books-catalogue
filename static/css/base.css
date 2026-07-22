@@ -259,6 +259,26 @@ main {
   line-height: 1.5;
 }
 
+/* Credits page */
+
+.credits-group {
+  margin: 1.5rem 0;
+}
+
+.credits-group h2 {
+  font-size: 1.05rem;
+  margin-bottom: 0.5rem;
+}
+
+.credits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
 /* Responsive breakpoints */
 
 @media (max-width: 900px) {

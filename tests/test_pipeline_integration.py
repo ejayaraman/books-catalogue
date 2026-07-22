@@ -22,6 +22,7 @@ def test_full_build_produces_expected_output(valid_spreadsheet: Path, tmp_path: 
     assert summary.error_count == 0
 
     assert (output_dir / "index.html").exists()
+    assert (output_dir / "credits.html").exists()
     assert (output_dir / "books.json").exists()
 
     for book in books:

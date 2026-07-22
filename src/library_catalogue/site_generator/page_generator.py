@@ -26,3 +26,7 @@ class PageGenerator:
     def render_book_page(self, book: dict[str, Any]) -> str:
         template = self.env.get_template("book.html")
         return template.render(book=book, asset_base="..")
+
+    def render_credits_page(self) -> str:
+        template = self.env.get_template("credits.html")
+        return template.render(asset_base=".")

@@ -56,6 +56,13 @@ def generate_index_page(
     logger.info("Generated index page")
 
 
+def generate_credits_page(generator: PageGenerator, output_dir: Path) -> None:
+    """Render the static credits page into output/credits.html."""
+    html = generator.render_credits_page()
+    (output_dir / "credits.html").write_text(html, encoding="utf-8")
+    logger.info("Generated credits page")
+
+
 def run_build(config: BuildConfig) -> BuildSummary:
     """Run the full 8-step build pipeline and return a summary."""
     start = time.perf_counter()
@@ -86,6 +93,9 @@ def run_build(config: BuildConfig) -> BuildSummary:
 
     stats = compute_stats(books)
     generate_index_page(json_data, stats, generator, config.output_dir)  # 7. catalogue page
+    pages_generated += 1
+
+    generate_credits_page(generator, config.output_dir)  # credits page
     pages_generated += 1
 
     duration = time.perf_counter() - start

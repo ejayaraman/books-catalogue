@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Credits — My Library{% endblock %}
+
+{% block content %}
+<a class="back-link" href="{{ asset_base }}/index.html">&larr; Back to Catalogue</a>
+
+<section class="credits">
+  <h1>Credits</h1>
+
+  <div class="credits-group">
+    <h2>Code</h2>
+    <ul class="credits-list">
+      <li>
+        <a href="https://claude.com/claude-code" target="_blank" rel="noopener">Claude Code</a>
+        &mdash; this site was built with Claude Code.
+      </li>
+    </ul>
+  </div>
+
+  <div class="credits-group">
+    <h2>Book metadata &amp; cover images</h2>
+    <ul class="credits-list">
+      <li>
+        <a href="https://books.google.com" target="_blank" rel="noopener">Google Books</a>
+      </li>
+      <li>
+        <a href="https://openlibrary.org" target="_blank" rel="noopener">Open Library</a>
+      </li>
+      <li>
+        <a href="https://www.goodreads.com" target="_blank" rel="noopener">Goodreads</a>
+      </li>
+      <li>
+        <a href="https://www.panuval.com" target="_blank" rel="noopener">Panuval.com</a>
+      </li>
+    </ul>
+  </div>
+</section>
+{% endblock %}
