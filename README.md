@@ -87,6 +87,7 @@ data/books.csv           Your CSV file
 covers/                  Your cover images
 tests/                   pytest suite
 output/                  Generated site (safe to delete; regenerated every run)
+.github/workflows/      GitHub Pages deployment workflow
 ```
 
 ## Development
@@ -98,7 +99,17 @@ black .               # format
 mypy src              # type-check
 ```
 
+## GitHub Pages deployment
+
+Pushes to `master` automatically rebuild the site and deploy it to GitHub Pages
+via `.github/workflows/deploy.yml`. To enable it on your fork: in the repo
+settings, set **Pages → Source** to **GitHub Actions**.
+
 ## Future enhancements (not in this version)
 
-GitHub Pages deployment workflow, borrow-request workflow, QR codes, author pages,
-reading statistics, multiple collections, ISBN metadata lookup, import/export tools.
+Borrow-request workflow, QR codes, author pages, reading statistics,
+multiple collections, ISBN metadata lookup, import/export tools.
+
+## Built with
+
+This repository was built with [Claude Code](https://claude.com/claude-code).
