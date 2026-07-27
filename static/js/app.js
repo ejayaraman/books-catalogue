@@ -3,27 +3,67 @@
 import { matches } from "./search.js";
 import { apply as applyFilters } from "./filters.js";
 import { sort as sortBooks } from "./sorting.js";
+import { paginate, PAGE_SIZE } from "./pagination.js";
 
-const state = { query: "", genre: "all", language: "all", sort: "recent" };
+const state = { query: "", genre: "all", language: "all", sort: "recent", page: 1 };
 
-function recompute(books, cardsById, resultsCountEl, grid) {
+function renderPagination(paginationEl, page, totalPages, onChange) {
+  paginationEl.innerHTML = "";
+  if (totalPages <= 1) {
+    return;
+  }
+
+  const prevButton = document.createElement("button");
+  prevButton.type = "button";
+  prevButton.textContent = "Previous";
+  prevButton.disabled = page <= 1;
+  prevButton.addEventListener("click", () => onChange(page - 1));
+
+  const status = document.createElement("span");
+  status.className = "pagination-status";
+  status.textContent = `Page ${page} of ${totalPages}`;
+
+  const nextButton = document.createElement("button");
+  nextButton.type = "button";
+  nextButton.textContent = "Next";
+  nextButton.disabled = page >= totalPages;
+  nextButton.addEventListener("click", () => onChange(page + 1));
+
+  paginationEl.append(prevButton, status, nextButton);
+}
+
+function recompute(books, cardsById, resultsCountEl, paginationEl, grid) {
   const filtered = applyFilters(books, { genre: state.genre, language: state.language });
   const searched = filtered.filter((book) => matches(book, state.query));
   const sorted = sortBooks(searched, state.sort);
-  const visibleIds = new Set(sorted.map((book) => book.id));
+  const { items: pageItems, page, totalPages } = paginate(sorted, state.page);
+  state.page = page;
+  const visibleIds = new Set(pageItems.map((book) => book.id));
 
   cardsById.forEach((card, id) => {
     card.style.display = visibleIds.has(id) ? "" : "none";
   });
 
-  sorted.forEach((book) => {
+  pageItems.forEach((book) => {
     const card = cardsById.get(book.id);
     if (card) {
       grid.appendChild(card);
     }
   });
 
-  resultsCountEl.textContent = `Showing ${sorted.length} of ${books.length} books`;
+  if (sorted.length === 0) {
+    resultsCountEl.textContent = "Showing 0 of 0 books";
+  } else {
+    const start = (page - 1) * PAGE_SIZE + 1;
+    const end = start + pageItems.length - 1;
+    resultsCountEl.textContent = `Showing ${start}-${end} of ${sorted.length} books`;
+  }
+
+  renderPagination(paginationEl, page, totalPages, (newPage) => {
+    state.page = newPage;
+    recompute(books, cardsById, resultsCountEl, paginationEl, grid);
+    grid.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -45,24 +85,29 @@ document.addEventListener("DOMContentLoaded", async () => {
   const languageFilter = document.getElementById("language-filter");
   const sortSelect = document.getElementById("sort-select");
   const resultsCountEl = document.getElementById("results-count");
+  const paginationEl = document.getElementById("pagination");
 
-  const update = () => recompute(books, cardsById, resultsCountEl, grid);
+  const update = () => recompute(books, cardsById, resultsCountEl, paginationEl, grid);
+  const updateFromScratch = () => {
+    state.page = 1;
+    update();
+  };
 
   searchInput.addEventListener("input", () => {
     state.query = searchInput.value.trim();
-    update();
+    updateFromScratch();
   });
   genreFilter.addEventListener("change", () => {
     state.genre = genreFilter.value;
-    update();
+    updateFromScratch();
   });
   languageFilter.addEventListener("change", () => {
     state.language = languageFilter.value;
-    update();
+    updateFromScratch();
   });
   sortSelect.addEventListener("change", () => {
     state.sort = sortSelect.value;
-    update();
+    updateFromScratch();
   });
 
   update();
